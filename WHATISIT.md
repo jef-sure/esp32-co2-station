@@ -1,6 +1,6 @@
 # Что в коробке
 
-![Итоговый вид](images/20260601_190019.jpg)
+![Итоговый вид](images/co2-final.jpg)
 
 Изначально это был отладочный проект для моей
 [графической библиотеки](https://components.espressif.com/components/jef-sure/dgx/),
