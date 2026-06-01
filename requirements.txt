@@ -1,0 +1,2 @@
+# Python dependency for build-time helper scripts.
+tzdata

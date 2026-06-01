@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CO2Station Settings</title>
+</head>
+<body>
+    <form action="/" method="post">
+        <table border="1" cellspacing="0" cellpadding="6">
+            <tr>
+                <th colspan="2">CO2Station configuration</th>
+            </tr>
+            <tr>
+                <td>MQTT address</td>
+                <td><input type="text" name="mqtt_address" value="%MQTT_ADDRESS%"></td>
+            </tr>
+            <tr>
+                <td>Device name</td>
+                <td><input type="text" name="device_name" value="%DEVICE_NAME%"></td>
+            </tr>
+            <tr>
+                <td>Host name</td>
+                <td><input type="text" name="host_name" value="%HOST_NAME%"></td>
+            </tr>
+            <tr>
+                <td>CO2 offset</td>
+                <td><input type="text" name="co2_offset" value="%CO2_OFFSET%"></td>
+            </tr>
+            <tr>
+                <td>Temperature offset</td>
+                <td><input type="text" name="temperature_offset" value="%TEMPERATURE_OFFSET%"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><small>Positive values raise the reported temperature, negative values lower it. Internally this is mapped to the SCD41 self-heating compensation register, which works in the opposite direction.</small></td>
+            </tr>
+            <tr>
+                <td>Humidity offset</td>
+                <td><input type="text" name="humidity_offset" value="%HUMIDITY_OFFSET%"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Save</button>
+                    <button type="submit" name="cancel" value="cancel">Cancel</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

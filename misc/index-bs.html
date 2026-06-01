@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CO2Station Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        label.form-label {
+            user-select: none;
+        }
+
+        .form-check-input {
+            border-width: medium;
+        }
+    </style>
+</head>
+<body class="p-3">
+    <form action="/" method="post">
+        <div class="mb-3">
+            <header class="d-flex justify-content-left py-3">CO2Station configuration</header>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="submit" name="cancel" value="cancel" class="btn btn-warning">Cancel</button>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="mqtt_address" class="form-label">MQTT address</label>
+            <input type="text" name="mqtt_address" id="mqtt_address" class="form-control" value="%MQTT_ADDRESS%">
+        </div>
+        <div class="mb-3">
+            <label for="mqtt_username" class="form-label">MQTT username</label>
+            <input type="text" name="mqtt_username" id="mqtt_username" class="form-control" value="%MQTT_USERNAME%">
+        </div>
+        <div class="mb-3">
+            <label for="mqtt_password" class="form-label">MQTT password</label>
+            <input type="password" name="mqtt_password" id="mqtt_password" class="form-control" value="%MQTT_PASSWORD%">
+        </div>
+        <div class="mb-3">
+            <label for="device_name" class="form-label">Device name</label>
+            <input type="text" name="device_name" id="device_name" class="form-control" value="%DEVICE_NAME%">
+        </div>
+        <div class="mb-3">
+            <label for="host_name" class="form-label">Host name</label>
+            <input type="text" name="host_name" id="host_name" class="form-control" value="%HOST_NAME%">
+        </div>
+        <p class="form-text">Host name is used as the MQTT client ID and Home Assistant discovery node ID.</p>
+        <div class="mb-3">
+            <label for="timezone" class="form-label">Timezone</label>
+            <select name="timezone" id="timezone" class="form-select">%TIMEZONE_OPTIONS%</select>
+        </div>
+        <p class="form-text">Timezone affects the clock shown on the display.</p>
+        <fieldset class="mb-3">
+            <legend>CO2 correction</legend>
+            <div class="mb-3">
+                <label for="co2_offset" class="form-label">Offset</label>
+                <input type="text" name="co2_offset" id="co2_offset" class="form-control" value="%CO2_OFFSET%">
+            </div>
+        </fieldset>
+        <fieldset class="mb-3">
+            <legend>Temperature correction</legend>
+            <div class="mb-3">
+                <label for="temperature_offset" class="form-label">Offset</label>
+                <input type="text" name="temperature_offset" id="temperature_offset" class="form-control" value="%TEMPERATURE_OFFSET%">
+            </div>
+            <p class="form-text">Positive values raise the reported temperature, negative values lower it. Internally this is mapped to the SCD41 self-heating compensation register, which works in the opposite direction.</p>
+        </fieldset>
+        <fieldset class="mb-3">
+            <legend>Humidity correction</legend>
+            <div class="mb-3">
+                <label for="humidity_offset" class="form-label">Offset</label>
+                <input type="text" name="humidity_offset" id="humidity_offset" class="form-control" value="%HUMIDITY_OFFSET%">
+            </div>
+        </fieldset>
+        <p class="form-text">Settings are stored in NVS and take effect without reopening the page.</p>
+    </form>
+</body>
+</html>

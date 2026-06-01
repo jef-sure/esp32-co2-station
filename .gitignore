@@ -1,0 +1,8 @@
+.vscode/
+build/
+dist/
+managed_components/
+dependencies.lock
+sdkconfig*
+.clangd
+misc/__pycache__/
