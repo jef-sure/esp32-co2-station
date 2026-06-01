@@ -90,9 +90,6 @@ idf.py add-dependency espressif/qrcode
 - **Кнопка:** ёмкостный сенсор TTP223 (бесконтактное касание).
 - **Корпус:** 3D-печать, модель собрана во FreeCAD (см. WHATISIT).
 
-Точные ножки I²C / SPI и параметры дисплея задаются в `sdkconfig`
-(`idf.py menuconfig`).
-
 ## Web server 
 
 ### Особенности формирования страницы настроек
