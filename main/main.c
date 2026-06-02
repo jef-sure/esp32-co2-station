@@ -677,12 +677,12 @@ static void dynamic_screen_init(dynamic_screen_t *ds, dgx_screen_t *screen)
 
     int value_y  = digits_baseline(screen);
     int status_y = value_y + label_font->yAdvance + label_font->yAdvance / 2;
-    int meas_y   = status_y + label_font->yAdvance + label_font->yAdvance / 2;
+    int meas_y   = status_y + time_font->yAdvance * 2 + label_font->yAdvance / 2 - 4;
     int time_y   = meas_y + time_font->yAdvance * 2 + label_font->yAdvance / 2 - 4;
     int web_y    = time_y + label_font->yAdvance + label_font->yAdvance / 2;
     value_init(&ds->value, screen);
     text_slot_init(&ds->status, screen, label_font, "Warming yg", status_y, 1);
-    text_slot_init(&ds->measurement, screen, label_font, "-000.0 C   000.0 %RH", meas_y, 1);
+    text_slot_init(&ds->measurement, screen, time_font, "-000.0℃ 000.0%", meas_y, 2);
     text_slot_init(&ds->time, screen, time_font, "00:00", time_y, 2);
     text_slot_init(&ds->web_address, screen, label_font, "255.255.255.255", web_y, 1);
 }
@@ -717,7 +717,7 @@ static void format_measurement(char *buf, size_t buf_size, int16_t temp_dc, uint
 {
     int         abs_t = temp_dc < 0 ? -(int)temp_dc : (int)temp_dc;
     const char *sign  = temp_dc < 0 ? "-" : "";
-    snprintf(buf, buf_size, "%s%d.%d C   %u.%u %%RH", sign, abs_t / 10, abs_t % 10, hum_dr / 10, hum_dr % 10);
+    snprintf(buf, buf_size, "%s%d.%d℃ %u.%u%%", sign, abs_t / 10, abs_t % 10, hum_dr / 10, hum_dr % 10);
 }
 
 /* Called from draw_dynamic_screen() in SensorReady state to build the 4-character CO2 display field. */
@@ -829,7 +829,7 @@ static void draw_dynamic_screen(dgx_screen_t *screen, dynamic_screen_t *ds, air_
     char        meas_buf[32];
     char        time_buf[8];
     char        web_buf[16];
-    const char *meas_text    = "--.- C   --.- %RH";
+    const char *meas_text    = "--.-℃ --.-%";
     const char *status_text  = "";
     const char *time_text    = "";
     const char *web_text     = "";
