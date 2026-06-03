@@ -34,19 +34,22 @@
 #include "provisioning.h"
 #include "tzones.h"
 
+// clang-format off
 /*
-
-| Устройство | Вывод устройства | GPIO | Функция в ESP-IDF | Особые примечания |
-| :--- | :--- | :--- | :--- | :--- |
-| **TTP223** | OUT | **GPIO0** | `GPIO_MODE_INPUT` | `GPIO_PULLUP_DISABLE`, `GPIO_PULLDOWN_DISABLE`. TTP223 idles LOW,
-поэтому уровень при boot стабилен. | | **SCD41** | SDA | **GPIO3** | `I2C_MODE_MASTER` | Внутренний pull-up включить
-(`GPIO_PULLUP_ENABLE`) | | | SCL | **GPIO5** | `I2C_MODE_MASTER` | Аналогично. | | **GC9A01** | CLK | **GPIO4** |
-`SPI2_HOST` (FSPICLK) | Аппаратный SPI. | | | MOSI | **GPIO6** | `SPI2_HOST` (FSPID) | Аппаратный SPI. MISO = `-1`. | |
-| CS | **GPIO7** | `SPI2_HOST` (FSPICS0) | Аппаратный SPI. | | | DC | **GPIO1** | `GPIO_MODE_OUTPUT` | Обычный GPIO. DC
-управляется MCU только после загрузки; состояние при старте не влияет на работу дисплея (CS не активен). | | | RST |
-**GPIO2** | `GPIO_MODE_OUTPUT` | Strapping-пин (должен быть HIGH при boot). |
-
-*/
+ * 
+ * | Device | Device Pin | GPIO | ESP-IDF Function | Special Notes |
+ * | :--- | :--- | :--- | :--- | :--- |
+ * | **TTP223** | OUT | **GPIO0** | `GPIO_MODE_INPUT` | `GPIO_PULLUP_DISABLE`, `GPIO_PULLDOWN_DISABLE`. TTP223 idles LOW; boot-level remains completely stable. |
+ * | **SCD41** | SDA | **GPIO3** | `I2C_MODE_MASTER` | Enable internal pull-up resistor (`GPIO_PULLUP_ENABLE`). |
+ * | | SCL | **GPIO5** | `I2C_MODE_MASTER` | Same as above (Enable internal pull-up resistor). |
+ * | **GC9A01** | CLK | **GPIO4** | `SPI2_HOST` (FSPICLK) | Hardware SPI. |
+ * | | MOSI | **GPIO6** | `SPI2_HOST` (FSPID) | Hardware SPI. MISO is not utilized (`-1`). |
+ * | | CS | **GPIO7** | `SPI2_HOST` (FSPICS0) | Hardware SPI. |
+ * | | DC | **GPIO1** | `GPIO_MODE_OUTPUT` | Standard GPIO. Controlled by MCU post-boot; start-up state does not affect display operation while CS is inactive. |
+ * | | RST | **GPIO2** | `GPIO_MODE_OUTPUT` | **Strapping Pin!** Must be pulled HIGH during boot for successful ESP32-C3 initialization. |
+ * 
+ */
+//clang-format on
 
 #define MIN3(a, b, c) DGX_MIN(DGX_MIN((a), (b)), (c))
 #define MAX3(a, b, c) DGX_MAX(DGX_MAX((a), (b)), (c))
