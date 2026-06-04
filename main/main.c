@@ -49,7 +49,7 @@
  * | | RST | **GPIO2** | `GPIO_MODE_OUTPUT` | **Strapping Pin!** Must be pulled HIGH during boot for successful ESP32-C3 initialization. |
  * 
  */
-//clang-format on
+// clang-format on
 
 #define MIN3(a, b, c) DGX_MIN(DGX_MIN((a), (b)), (c))
 #define MAX3(a, b, c) DGX_MAX(DGX_MAX((a), (b)), (c))
@@ -1039,8 +1039,8 @@ static void scd41_task(void *arg)
         scd4x_measurement_t m;
         err = scd4x_read_measurement(s->sensor, &m);
         if (err == ESP_OK) {
-            int8_t rssi_dbm;
-            bool   has_rssi_dbm;
+            int8_t rssi_dbm     = 0;
+            bool   has_rssi_dbm = false;
 
             float co2  = m.co2 + settings.co2_offset;
             float temp = m.temperature;
@@ -1064,10 +1064,18 @@ static void scd41_task(void *arg)
                 state.co2_ppm += lq_filter[i].co2_ppm;
             }
             state.co2_ppm /= lq_capacity;
-            has_rssi_dbm = app_wifi_get_rssi_dbm(&rssi_dbm);
             (void)xQueueOverwrite(s->queue, &state);
-            app_mqtt_publish_measurement(&settings, state.co2_ppm, state.temperature_deci_c, state.humidity_deci_rh,
-                                         has_rssi_dbm, rssi_dbm);
+            if (app_wifi_is_provisioned()) {
+                has_rssi_dbm = app_wifi_get_rssi_dbm(&rssi_dbm);
+                app_mqtt_publish_measurement( //
+                    &settings,                //
+                    state.co2_ppm,            //
+                    state.temperature_deci_c, //
+                    state.humidity_deci_rh,   //
+                    has_rssi_dbm,             //
+                    rssi_dbm                  //
+                );
+            }
             if (has_rssi_dbm) {
                 ESP_LOGI(TAG, "CO2=%u ppm, T=%.2f C, RH=%.2f %%, RSSI=%d dBm", (unsigned)state.co2_ppm, temp, hum,
                          (int)rssi_dbm);
