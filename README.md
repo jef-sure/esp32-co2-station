@@ -265,6 +265,8 @@ Due to the wires running to the button and sensor on one side, I had to offset t
 
 ![Rear isometric view](images/20260601_190019.jpg)
 
+Small video:
+
 [![Control](https://img.youtube.com/vi/KBd7ONRk86Q/0.jpg)](https://youtu.be/KBd7ONRk86Q)
 
 _Startup and Operation._
