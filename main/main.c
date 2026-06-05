@@ -1271,19 +1271,25 @@ void app_main(void)
     (void)current_synced_minute(&shown_clock_minute);
 
     for (;;) {
+        bool can_render_ui = display_enabled && !provisioning_active;
+        bool needs_redraw  = false;
+
         air_state_t state;
         if (xQueueReceive(queue, &state, 1) == pdPASS && !air_state_equal(state, shown)) {
-            if (display_enabled && !provisioning_active) {
+            if (can_render_ui) {
                 update_gauge(&gauge, state);
-                draw_dynamic_screen(screen, &ds, state);
+                needs_redraw = true;
             }
             shown = state;
         }
 
-        if (display_enabled && !provisioning_active) {
+        if (can_render_ui) {
             time_t clock_minute = 0;
             if (current_synced_minute(&clock_minute) && clock_minute != shown_clock_minute) {
                 shown_clock_minute = clock_minute;
+                needs_redraw       = true;
+            }
+            if (needs_redraw) {
                 draw_dynamic_screen(screen, &ds, shown);
             }
             (void)value_step_animation(screen, &ds.value);
